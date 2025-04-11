@@ -26,6 +26,20 @@ resource "aws_internet_gateway" "main" {
   )
 }
 
+# DB Subnet group for RDS
+resource "aws_db_subnet_group" "expense" {
+  name       = local.resource_name
+  subnet_ids = aws_subnet.database[*].id
+
+  tags = merge(
+    var.common_tags,
+    var.db_subnet_group_tags,
+    {
+        Name = local.resource_name
+    }
+  )
+}
+
 # expense-dev-public-us-east-1a
 resource "aws_subnet" "public" {
   count                   = length(var.public_subnet_cidrs)
