@@ -37,7 +37,3 @@ output "database_subnet_ids" {
 output "gw_id" {
   value = aws_internet_gateway.main.id
 }
-output "db_subnet_group" {
-  value = aws_db_subnet_group_name.expense.name
-
-}
