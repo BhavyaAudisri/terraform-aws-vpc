@@ -168,15 +168,6 @@ resource "aws_route_table_association" "database" {
 }
 
 resource "aws_db_subnet_group" "expense" {
-  name       = "main"
-  subnet_ids = aws_subnet.database[count.index].id
-
-  tags = {
-    Name = local.resource_name
-  }
-}
-
-resource "aws_db_subnet_group" "expense" {
   name       = "${var.project_name}-${var.environment}"
   subnet_ids = aws_vpc.main.database_subnet_ids
 
