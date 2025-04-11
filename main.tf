@@ -168,8 +168,17 @@ resource "aws_route_table_association" "database" {
 }
 
 resource "aws_db_subnet_group" "expense" {
+  name       = "main"
+  subnet_ids = aws_subnet.database[count.index].id
+
+  tags = {
+    Name = local.resource_name
+  }
+}
+
+resource "aws_db_subnet_group" "expense" {
   name       = "${var.project_name}-${var.environment}"
-  subnet_ids = module.vpc.database_subnet_ids
+  subnet_ids = aws_subnet.database[*].id
 
   tags = merge(
     var.common_tags,
